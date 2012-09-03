@@ -147,6 +147,15 @@ class CharacterTest(unittest.TestCase):
                     if boss.name == 'Nefarian':
                         self.assertGreater(boss.normal, 0)
 
+    def test_talents(self):
+        character = Character(self._region, self._realm_name, self._character_name, fields=[Character.TALENTS])
+        self.assertEqual(len(character.talents), 2)
+
+    def test_talents_worldwide(self):
+        for region, realm, character_name in self._characters:
+            character = Character(region, realm, character_name, fields=[Character.TALENTS])
+            self.assertEqual(len(character.talents), 2)
+
     def test_characters_worldwide(self):
         for region, realm, character_name in self._characters:
             character = Character(region, realm, character_name)
