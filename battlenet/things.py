@@ -523,7 +523,7 @@ class Build(Thing):
             self.icon = 'inv_misc_questionmark'
             self.name = 'None'
 
-        self.talents = data['talents']
+        self.talents = data.get('talents', data.get('build', []))
         self.selected = data.get('selected', False)
         self.glyphs = {
             'prime': [],
