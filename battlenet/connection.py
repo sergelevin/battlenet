@@ -14,14 +14,10 @@ try:
 except ImportError:
     import json
 
-try:
-    from eventlet.green import urllib2 as eventlet_urllib2
-except ImportError:
-    eventlet_urllib2 = None
 
 __all__ = ['Connection']
 
-URL_FORMAT = 'https://%(region)s.battle.net/api/%(game)s%(path)s?locale=%(locale)s&%(params)s'
+URL_FORMAT = 'https://%(region)s.battle.net/api/%(game)s%(path)s?%(params)s'
 
 logger = logging.getLogger('battlenet')
 
@@ -32,19 +28,15 @@ MONTHS = ('', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul',
 
 class Connection(object):
     defaults = {
-        'eventlet': False,
         'public_key': None,
         'private_key': None,
-        'locale': ''
+        'locale': 'en_US'
     }
 
-    def __init__(self, public_key=None, private_key=None,
-                 game='wow', eventlet=None, locale=None):
-
+    def __init__(self, public_key=None, private_key=None, game='wow', locale=None):
         self.public_key = public_key or Connection.defaults.get('public_key')
         self.private_key = private_key or Connection.defaults.get('private_key')
         self.game = game
-        self.eventlet = eventlet or Connection.defaults.get('eventlet', False)
         self.locale = locale or Connection.defaults.get('locale')
 
         self._cache = {}
@@ -69,6 +61,7 @@ class Connection(object):
 
     def make_request(self, region, path, params=None, cache=False):
         params = params or {}
+        params['locale'] = self.locale
 
         now = time.gmtime()
         date = '%s, %2d %s %d %2d:%02d:%02d GMT' % (DAYS[now[6]], now[2],
@@ -82,7 +75,6 @@ class Connection(object):
             'region': region,
             'game': self.game,
             'path': path,
-            'locale': self.locale,
             'params': '&'.join('='.join(
                 (k, ','.join(v) if isinstance(v, (set, list)) else v))
                 for k, v in params.items() if v)
@@ -101,16 +93,10 @@ class Connection(object):
 
         request = urllib2.Request(url, None, headers)
 
-        if self.eventlet and eventlet_urllib2:
-            try:
-                response = eventlet_urllib2.urlopen(request)
-            except (eventlet_urllib2.URLError), e:
-                raise APIError(str(e))
-        else:
-            try:
-                response = urllib2.urlopen(request)
-            except (urllib2.URLError), e:
-                raise APIError(str(e))
+        try:
+            response = urllib2.urlopen(request)
+        except urllib2.URLError, e:
+            raise APIError(str(e))
 
         try:
             data = json.loads(response.read())

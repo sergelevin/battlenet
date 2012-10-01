@@ -125,16 +125,16 @@ class CharacterTest(unittest.TestCase):
         self.assertIsInstance(repr(character), str)
         self.assertEqual(character.name, self._character_name_unicode)
 
-    def test_pet_class(self):
-        character = Character(self._region, self._realm_name, self._character_name_hunter, fields=[Character.PETS])
+    def test_hunter_pet_class(self):
+        character = Character(battlenet.UNITED_STATES, 'Kiljaeden', 'Tandisse', fields=[Character.HUNTER_PETS])
 
-        self.assertTrue(hasattr(character, 'pets'))
-        self.assertIn(self._pet_name, [pet.name for pet in character.pets])
+        self.assertTrue(hasattr(character, 'hunter_pets'))
+        self.assertIn('Rudebull', [pet.name for pet in character.hunter_pets])
 
     def test_achievements(self):
         character = Character(self._region, self._realm_name, self._character_name, fields=[Character.ACHIEVEMENTS])
 
-        self.assertEqual(character.achievements[513], datetime.datetime(2008, 10, 16, 1, 12, 6))
+        self.assertEqual(character.achievements[513], datetime.datetime(2008, 10, 15, 16, 12, 6))
 
     def test_progression(self):
         character = Character(self._region, self._realm_name, self._character_name, fields=[Character.PROGRESSION])
