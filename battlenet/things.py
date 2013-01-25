@@ -605,7 +605,7 @@ class Boss(Thing):
         self.id = data['id']
         self.name = data['name']
         self.normal = data['normalKills']
-        self.heroic = data['heroicKills']
+        self.heroic = data.get('heroicKills', 0)
 
     def __str__(self):
         return self.name
