@@ -603,8 +603,11 @@ class Boss(Thing):
         self._instance = instance
 
         self.id = data['id']
+        if self.id == 0:
+            self.id = data['name']
         self.name = data['name']
-        self.normal = data['normalKills']
+        self.lfr = data.get('lfrKills', 0)
+        self.normal = data.get('normalKills', 0)
         self.heroic = data.get('heroicKills', 0)
 
     def __str__(self):
