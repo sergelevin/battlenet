@@ -117,6 +117,8 @@ class Connection(object):
 
         try:
             data = self.make_request(region, '/character/%s/%s' % (realm, name), {'fields': fields})
+            if not data:
+                raise CharacterNotFound
 
             if raw:
                 return data
