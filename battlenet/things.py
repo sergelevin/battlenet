@@ -108,6 +108,10 @@ class Character(LazyThing):
     FIRST_AID = 'First Aid'
     FISHING = 'Fishing'
 
+    DPS = 'DPS'
+    TANK = 'TANK'
+    HEALING = 'HEALING'
+
     STATS = 'stats'
     TALENTS = 'talents'
     ITEMS = 'items'
@@ -311,6 +315,13 @@ class Character(LazyThing):
                 return talent.name
 
         return ''
+
+    def get_role(self):
+        for talent in self.talents:
+            if talent.selected:
+                return talent.role
+
+        return None
 
     def get_full_class_name(self):
         spec_name = self.get_spec_name()
@@ -523,9 +534,11 @@ class Build(Thing):
         if 'spec' in data:
             self.icon = spec.get('icon')
             self.name = spec.get('name')
+            self.role = spec.get('role')
         else:
             self.icon = 'inv_misc_questionmark'
             self.name = 'None'
+            self.role = None
 
         self.talents = data.get('talents', data.get('build', []))
         self.selected = data.get('selected', False)
