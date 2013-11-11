@@ -36,6 +36,8 @@ QUALITY = {
     3: 'Rare',
     4: 'Epic',
     5: 'Legendary',
+    6: 'Artifact',
+    7: 'Heirloom',
 }
 
 RACE_TO_FACTION = {
