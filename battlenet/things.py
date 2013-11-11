@@ -904,6 +904,12 @@ class EquippedItem(Thing):
         self.name = data['name']
         self.quality = data['quality']
         self.itemLevel = data['itemLevel']
+        self.upgradable = 'upgrade' in data['tooltipParams']
+        if self.upgradable:
+            self.itemLevelIncrement = data['tooltipParams']['upgrade']['itemLevelIncrement']
+        else:
+            self.itemLevelIncrement = 0
+        self.itemLevelBase = data['itemLevel'] - self.itemLevelIncrement
         self.icon = data['icon']
 
         self.reforge = data['tooltipParams'].get('reforge')
