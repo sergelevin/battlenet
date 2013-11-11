@@ -909,6 +909,7 @@ class EquippedItem(Thing):
             self.upgrade = data['tooltipParams']['upgrade']
         self.icon = data['icon']
 
+        self.random_enchant = data['tooltipParams'].get('suffix')
         self.reforge = data['tooltipParams'].get('reforge')
         self.set = data['tooltipParams'].get('set')
         self.enchant = data['tooltipParams'].get('enchant')
