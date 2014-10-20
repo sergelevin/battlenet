@@ -42,6 +42,7 @@ class CharacterTest(unittest.TestCase):
 
     _characters = (
         (battlenet.UNITED_STATES, 'illidan', 'Zonker'),
+        (battlenet.UNITED_STATES, 'Mannoroth', 'Doubleagent'),
         (battlenet.EUROPE, "Lightning's Blade", 'Sejta'),
         (battlenet.KOREA, '헬스크림', '천우회'),
         (battlenet.TAIWAN, '水晶之刺', '憂郁的風'),
