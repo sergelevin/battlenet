@@ -1,13 +1,19 @@
 # -*- coding: utf-8 -*-
 
+import os
 import battlenet
 from battlenet import Realm
+from battlenet.utils import api_key
 
 try:
     import unittest2 as unittest
 except ImportError:
     import unittest as unittest
-    
+
+PUBLIC_KEY = os.environ.get('BNET_PUBLIC_KEY')
+PRIVATE_KEY = os.environ.get('BNET_PRIVATE_KEY')
+
+
 class RealmTest(unittest.TestCase):
     def _realm_for(self, region, name, useLocaleEn=False):
         if useLocaleEn:
@@ -17,8 +23,12 @@ class RealmTest(unittest.TestCase):
         self.assertEqual(realm.name, name)
 
     def setUp(self):
-        self.connection = battlenet.Connection()
-        self.connection_en = battlenet.Connection(locale='en')
+        self.connection = battlenet.Connection(
+            api_key=api_key(), public_key=PUBLIC_KEY, private_key=PRIVATE_KEY,
+            locale='not-specified')
+        self.connection_en = battlenet.Connection(
+            api_key=api_key(), public_key=PUBLIC_KEY, private_key=PRIVATE_KEY,
+            locale='en')
 
     def test_realm_by_name(self):
         name = "Kiljaeden"

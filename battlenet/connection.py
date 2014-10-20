@@ -17,9 +17,11 @@ except ImportError:
 
 __all__ = ['Connection']
 
-URL_FORMAT = 'https://%(region)s.battle.net/api/%(game)s%(path)s?%(params)s'
+URL_FORMAT = 'https://%(region)s.api.battle.net/%(game)s%(path)s?apikey=%(apikey)s&%(params)s'
 
+logging.basicConfig()
 logger = logging.getLogger('battlenet')
+##logger.setLevel(logging.DEBUG)
 
 DAYS = ('Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun',)
 MONTHS = ('', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul',
@@ -28,12 +30,14 @@ MONTHS = ('', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul',
 
 class Connection(object):
     defaults = {
+        'api_key': '',
         'public_key': None,
         'private_key': None,
         'locale': 'en_US'
     }
 
-    def __init__(self, public_key=None, private_key=None, game='wow', locale=None):
+    def __init__(self, api_key='', public_key=None, private_key=None, game='wow', locale=None):
+        self.api_key = api_key or Connection.defaults.get('api_key')
         self.public_key = public_key or Connection.defaults.get('public_key')
         self.private_key = private_key or Connection.defaults.get('private_key')
         self.game = game
@@ -75,6 +79,7 @@ class Connection(object):
             'region': region,
             'game': self.game,
             'path': path,
+            'apikey': self.api_key,
             'params': '&'.join('='.join(
                 (k, ','.join(v) if isinstance(v, (set, list)) else v))
                 for k, v in params.items() if v)

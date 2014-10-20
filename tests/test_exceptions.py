@@ -1,5 +1,6 @@
 import os
 import battlenet
+from battlenet.utils import api_key
 
 try:
     import unittest2 as unittest
@@ -11,7 +12,7 @@ PRIVATE_KEY = os.environ.get('BNET_PRIVATE_KEY')
 
 class ExceptionTest(unittest.TestCase):
     def setUp(self):
-        self.connection = battlenet.Connection(public_key=PUBLIC_KEY, private_key=PRIVATE_KEY)
+        self.connection = battlenet.Connection(api_key=api_key(), public_key=PUBLIC_KEY, private_key=PRIVATE_KEY)
 
     def test_character_not_found(self):
         self.assertRaises(battlenet.CharacterNotFound,

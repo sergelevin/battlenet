@@ -1,6 +1,9 @@
 import unicodedata
 import urllib
+import os
 
+def api_key():
+    return os.environ.get('BNET_API_KEY')
 
 def normalize(name):
     if not isinstance(name, unicode):
@@ -33,4 +36,4 @@ def make_connection():
         from .connection import Connection
         make_connection.Connection = Connection
 
-    return make_connection.Connection()
+    return make_connection.Connection(api_key=api_key())

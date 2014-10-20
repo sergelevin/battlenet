@@ -1,6 +1,7 @@
 import os
 import battlenet
 from operator import itemgetter
+from battlenet.utils import api_key
 
 try:
     import unittest2 as unittest
@@ -12,7 +13,8 @@ PRIVATE_KEY = os.environ.get('BNET_PRIVATE_KEY')
 
 class DataTest(unittest.TestCase):
     def setUp(self):
-        self.connection = battlenet.Connection(public_key=PUBLIC_KEY, private_key=PRIVATE_KEY)
+        self.connection = battlenet.Connection(
+            api_key=api_key(), public_key=PUBLIC_KEY, private_key=PRIVATE_KEY)
 
     def test_races(self):
         races = self.connection.get_character_races(battlenet.UNITED_STATES)

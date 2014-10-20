@@ -7,13 +7,10 @@ Major features
 ----------------------
 
 * Pythonic
-
 * Unicode normalization
-
 * Lazyloading and eagerloading
-
-
 * Support locales (en, fr, de, ...)
+* Support api/public/private keys
 
 Making a connection
 ----------------------
@@ -24,7 +21,11 @@ Global connection settings can be setup so that objects can make connections imp
 
     from battlenet import Connection
 
-    Connection.setup(public_key='your public key', private_key='your private key', locale='fr')
+    Connection.setup(
+        api_key='your api key',
+        public_key='your public key',
+        private_key='your private key',
+        locale='fr')
 
 You can also create connections explicitly.
 
@@ -32,7 +33,22 @@ You can also create connections explicitly.
 
     from battlenet import Connection
 
-    connection = Connection(public_key='your public key', private_key='your private key', locale='fr')
+    connection = Connection(
+        api_key='your api key',
+        public_key='your public key',
+        private_key='your private key',
+        locale='fr')
+
+Using the api/public/private keys
+----------------------------------
+
+You can define your keys via environment variables. For example using a bash shell:
+
+::
+
+    $ export BNET_API_KEY=put-your-api-key-here
+
+More details on the keys on the official battle.net dev website https://dev.battle.net/.
 
 Fetching a specific realm
 -------------------------
