@@ -164,7 +164,7 @@ class Connection(object):
 
     def get_realm(self, region, name, raw=False):
         data = self.make_request(region, '/realm/status', {'realm': quote(name.lower())})
-        data = [d for d in data['realms'] if normalize(d['name']) == normalize(name)]
+        data = [d for d in data['realms'] if normalize(d['name']).lower() == normalize(name).lower()]
 
         if len(data) != 1:
             raise RealmNotFound
