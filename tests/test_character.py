@@ -21,32 +21,33 @@ class CharacterTest(unittest.TestCase):
     _character_name = 'Sejta'
     _region = battlenet.EUROPE
     _realm_name = "Lightning's Blade"
-    _guild_name = 'DREAM Paragon'
+    _guild_name = 'Paragon'
     _faction = Character.HORDE
-    _race = Character.TAUREN
+    _race = Character.TROLL
     _class = Character.DRUID
-    _level = 85
+    _level = 90
     _gender = Character.MALE
     _profession_1 = Character.LEATHERWORKING
-    _profession_2 = Character.JEWELCRATING
+    _profession_2 = Character.BLACKSMITHING
     _professions_secondary = (Character.ARCHAEOLOGY, Character.COOKING, Character.FIRST_AID, Character.FISHING)
-    _appearance_face = 1
-    _appearance_feature = 6
-    _appearance_hair_color = 2
+    _appearance_face = 0
+    _appearance_feature = 3
+    _appearance_hair_color = 1
     _appearance_show_cloak = False
-    _appearance_show_helm = False
-    _appearance_hair = 10
+    _appearance_show_helm = True
+    _appearance_hair = 3
 
-    _character_name_unicode = 'Lappé'
+    _character_name_unicode = 'Luný'
     _character_name_hunter = 'Devai'
     _pet_name = 'DEVAJR'
 
     _characters = (
         (battlenet.UNITED_STATES, 'illidan', 'Zonker'),
         (battlenet.EUROPE, "Lightning's Blade", 'Sejta'),
-        (battlenet.KOREA, '굴단', '미스호드진'),
+        (battlenet.KOREA, '헬스크림', '천우회'),
         (battlenet.TAIWAN, '水晶之刺', '憂郁的風'),
-        (battlenet.CHINA, '灰谷', '小蠬蝦'),
+        ## china api is not available now
+        ##(battlenet.CHINA, '灰谷', '小蠬蝦'),
     )
 
     def test_general(self):
@@ -66,7 +67,7 @@ class CharacterTest(unittest.TestCase):
         self.assertEqual(character.get_class_name(), self._class)
 
         self.assertIsInstance(character.level, int)
-        self.assertGreaterEqual(character.level, 85)
+        self.assertGreaterEqual(character.level, self._level)
 
         self.assertIsInstance(character.achievement_points, int)
 
@@ -134,7 +135,7 @@ class CharacterTest(unittest.TestCase):
     def test_achievements(self):
         character = Character(self._region, self._realm_name, self._character_name, fields=[Character.ACHIEVEMENTS])
 
-        self.assertEqual(character.achievements[513], datetime.datetime(2008, 10, 15, 16, 12, 6))
+        self.assertEqual(character.achievements[513], datetime.datetime(2008, 10, 15, 15, 56, 0))
 
     def test_progression(self):
         character = Character(self._region, self._realm_name, self._character_name, fields=[Character.PROGRESSION])

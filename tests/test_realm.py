@@ -95,16 +95,16 @@ class RealmTest(unittest.TestCase):
         self._realm_for(battlenet.EUROPE, 'Khaz Modan')
 
     def test_realm_korea(self):
-        self._realm_for(battlenet.KOREA, '가로나')
+        self._realm_for(battlenet.KOREA, '줄진')
 
     def test_realm_korea_en(self):
-        self._realm_for(battlenet.KOREA, 'Aegwynn', useLocaleEn=True)
+        self._realm_for(battlenet.KOREA, 'Hyjal', useLocaleEn=True)
 
     def test_realm_taiwan(self):
         self._realm_for(battlenet.TAIWAN, '世界之樹')
 
     def test_realm_taiwan_en(self):
-        self._realm_for(battlenet.TAIWAN, 'Aeonus', useLocaleEn=True)
+        self._realm_for(battlenet.TAIWAN, 'Dragonmaw', useLocaleEn=True)
 
     def test_realm_china(self):
         self._realm_for(battlenet.CHINA, '灰谷')
@@ -113,7 +113,7 @@ class RealmTest(unittest.TestCase):
         self._realm_for(battlenet.CHINA, 'Abbendis', useLocaleEn=True)
 
     def test_unicode(self):
-        self._realm_for(battlenet.CHINA, '灰谷')
+        self._realm_for(battlenet.KOREA, '줄진')
 
     def tearDown(self):
         del self.connection

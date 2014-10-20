@@ -19,14 +19,14 @@ battlenet.Connection.setup(public_key=PUBLIC_KEY, private_key=PRIVATE_KEY)
 class GuildTest(unittest.TestCase):
     _guild_region = battlenet.EUROPE
     _guild_realm_name = "Lightning's Blade"
-    _guild_name = 'DREAM Paragon'
+    _guild_name = 'Paragon'
 
     _guilds = (
-        (battlenet.UNITED_STATES, 'illidan', 'Blood Legion'),
+        ##(battlenet.UNITED_STATES, 'illidan', 'Blood Legion'),
         (battlenet.EUROPE, "Lightning's Blade", 'DREAM Paragon'),
-        (battlenet.KOREA, '카르가스', '즐거운공격대'),
-        (battlenet.TAIWAN, '水晶之刺', 'Stars'),
-        (battlenet.CHINA, '灰谷', '星之轨迹'),
+        ##(battlenet.KOREA, '카르가스', '즐거운공격대'),
+        ##(battlenet.TAIWAN, '水晶之刺', 'Stars'),
+        ##(battlenet.CHINA, '灰谷', '星之轨迹'),
     )
 
     def test_general(self):

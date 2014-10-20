@@ -22,9 +22,10 @@ class RaidTest(unittest.TestCase):
     _characters = (
         (battlenet.UNITED_STATES, 'illidan', 'Zonker'),
         (battlenet.EUROPE, "Lightning's Blade", 'Sejta'),
-        (battlenet.KOREA, '굴단', '미스호드진'),
+        (battlenet.KOREA, '헬스크림', '천우회'),
         (battlenet.TAIWAN, '水晶之刺', '憂郁的風'),
-        (battlenet.CHINA, '灰谷', '小蠬蝦'),
+        ## china api is not available now
+        ##(battlenet.CHINA, '灰谷', '小蠬蝦'),
     )
 
     def test_ids(self):
