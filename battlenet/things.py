@@ -391,15 +391,12 @@ class Stats(Thing):
         self.crit_rating = data['critRating']
         self.dodge = data['dodge']
         self.dodge_rating = data['dodgeRating']
-        self.expertise_rating = data['expertiseRating']
         self.haste_rating = data['hasteRating']
         self.health = data['health']
-        self.hit_rating = data['hitRating']
         self.intellect = data['int']
         self.main_hand_damage_max = data['mainHandDmgMax']
         self.main_hand_damage_min = data['mainHandDmgMin']
         self.main_hand_dps = data['mainHandDps']
-        self.main_hand_expertise = data['mainHandExpertise']
         self.main_hand_speed = data['mainHandSpeed']
         self.mana_regen = data['mana5']
         self.mana_regen_combat = data['mana5Combat']
@@ -408,7 +405,6 @@ class Stats(Thing):
         self.off_hand_damage_max = data['offHandDmgMax']
         self.off_hand_damage_min = data['offHandDmgMin']
         self.off_hand_dps = data['offHandDps']
-        self.off_hand_expertise = data['offHandExpertise']
         self.off_hand_speed = data['offHandSpeed']
         self.parry = data['parry']
         self.parry_rating = data['parryRating']
@@ -420,7 +416,6 @@ class Stats(Thing):
         self.ranged_damage_max = data['rangedDmgMax']
         self.ranged_damage_min = data['rangedDmgMin']
         self.ranged_dps = data['rangedDps']
-        self.ranged_hit_rating = data['rangedHitRating']
         self.ranged_speed = data['rangedSpeed']
         self.resilience = data['pvpResilience']
         self.resilience_rating = data['pvpResilienceRating']
@@ -431,24 +426,6 @@ class Stats(Thing):
         self.spirit = data['spr']
         self.stamina = data['sta']
         self.strength = data['str']
-
-    @property
-    def hit(self):
-        return self._convert_rating_to_percent({
-            60: 9.37931,
-            70: 14.7905,
-            80: 40.7548,
-            85: 120.109
-        }, self.hit_rating)
-
-    @property
-    def spell_hit(self):
-        return self._convert_rating_to_percent({
-            60: 8,
-            70: 12.6154,
-            80: 26.232,
-            85: 102.446
-        }, self.hit_rating)
 
     @property
     def haste(self):
@@ -702,7 +679,6 @@ class Guild(LazyThing):
         self._data = data
 
         self.name = normalize(data['name'])
-        self.level = data['level']
         self.emblem = Emblem(data['emblem']) if 'emblem' in data else None
         self.achievement_points = data['achievementPoints']
         self.faction = ({
