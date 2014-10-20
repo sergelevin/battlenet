@@ -27,8 +27,7 @@ class CharacterTest(unittest.TestCase):
     _class = Character.DRUID
     _level = 90
     _gender = Character.MALE
-    _profession_1 = Character.LEATHERWORKING
-    _profession_2 = Character.BLACKSMITHING
+    _professions = (Character.LEATHERWORKING, Character.BLACKSMITHING)
     _professions_secondary = (Character.ARCHAEOLOGY, Character.COOKING, Character.FIRST_AID, Character.FISHING)
     _appearance_face = 0
     _appearance_feature = 3
@@ -91,11 +90,10 @@ class CharacterTest(unittest.TestCase):
         profession_1 = primary[0]
         profession_2 = primary[1]
 
-        self.assertEqual(profession_1.name, self._profession_1)
-        self.assertIsInstance(profession_1.rank, int)
-        self.assertIsInstance(profession_1.recipes, list)
-
-        self.assertEqual(profession_2.name, self._profession_2)
+        for profession in (profession_1, profession_2):
+            self.assertIn(profession.name, self._professions)
+            self.assertIsInstance(profession.rank, int)
+            self.assertIsInstance(profession.recipes, list)
 
         secondary = [p.name for p in character.professions['secondary']]
 
