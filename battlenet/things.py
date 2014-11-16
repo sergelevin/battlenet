@@ -600,6 +600,7 @@ class Boss(Thing):
         self.flex = data.get('flexKills', 0)
         self.normal = data.get('normalKills', 0)
         self.heroic = data.get('heroicKills', 0)
+        self.mythic = data.get('mythicKills', 0)
 
     def __str__(self):
         return self.name
