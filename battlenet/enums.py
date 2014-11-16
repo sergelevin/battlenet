@@ -64,6 +64,7 @@ EXPANSION = {
     2: ('lk', 'Wrath of the Lich King'),
     3: ('cata', 'Cataclysm'),
     4: ('mop', 'Mists of Pandaria'),
+    5: ('wod', 'Warlords of Draenor'),
 }
 
 RAIDS = {
@@ -72,4 +73,5 @@ RAIDS = {
     'lk': (4603, 3456, 4493, 4500, 4273, 2159, 4722, 4812, 4987),
     'cata': (5600, 5094, 5334, 5638, 5723, 5892),
     'mop': (6125, 6297, 6067, 6622, 6738),
+    'wod': (6996, 6967),
 }
