@@ -1,4 +1,5 @@
 import logging
+import urllib3
 import urllib2
 import urllib
 import base64
@@ -24,6 +25,7 @@ URL_FORMAT = 'https://%(region)s.api.battle.net/%(game)s%(path)s?apikey=%(apikey
 logging.basicConfig()
 logger = logging.getLogger('battlenet')
 ##logger.setLevel(logging.DEBUG)
+urllib3.disable_warnings()
 
 DAYS = ('Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun',)
 MONTHS = ('', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul',
@@ -46,6 +48,7 @@ class Connection(object):
         self.locale = locale or Connection.defaults.get('locale')
 
         self._cache = {}
+        self._poolManager = urllib3.PoolManager()
 
     def __eq__(self, other):
         if not isinstance(other, Connection):
@@ -97,16 +100,14 @@ class Connection(object):
 
         logger.debug('Battle.net => ' + url)
 
-        request = urllib2.Request(url, None, headers)
-
         try:
-            response = urllib2.urlopen(request)
-        except urllib2.URLError, e:
+            response = self._poolManager.request('GET', url, None, headers)
+        except urllib3.exceptions.HTTPError, e:
             raise APIError(str(e))
 
         try:
-            data = json.loads(response.read())
-        except json.JSONDecodeError:
+            data = json.loads(response.data)
+        except ValueError:
             raise APIError('Non-JSON Response')
         else:
             if data.get('status') == 'nok':
