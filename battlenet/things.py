@@ -126,9 +126,11 @@ class Character(LazyThing):
     HUNTER_PETS = 'hunterPets'
     PROGRESSION = 'progression'
     ACHIEVEMENTS = 'achievements'
+    PETS = 'pets'
+    
     ALL_FIELDS = [STATS, TALENTS, ITEMS, REPUTATIONS, TITLES, PROFESSIONS,
                   APPEARANCE, COMPANIONS, MOUNTS, GUILD, QUESTS, HUNTER_PETS,
-                  PROGRESSION, ACHIEVEMENTS]
+                  PROGRESSION, ACHIEVEMENTS, PETS]
 
     def __init__(self, region, realm=None, name=None, data=None, fields=None, connection=None):
         super(Character, self).__init__(data, fields)
@@ -293,6 +295,18 @@ class Character(LazyThing):
                 self._achievements[id_] = datetime.datetime.fromtimestamp(timestamp / 1000)
 
         return self._achievements
+    
+    @property
+    def pets(self):
+        if self._refresh_if_not_present(Character.PETS):
+            self._pets = []
+            pets = self._data[Character.PETS]
+            
+            if 'collected' in pets:
+                self._pets = [Pet(self, pet) for pet in pets['collected']]
+            
+        return self._pets
+    
 
     def refresh(self, *fields):
         for field in fields:
@@ -956,3 +970,34 @@ class Raid(Thing):
                     if EXPANSION[e][0] == exp:
                         return exp, EXPANSION[e][1]
         return (None, None)
+
+class Pet(Thing):
+    def __init__(self, character, data):
+        super(Pet, self).__init__(data)
+        
+        self._character = character
+        
+        self.name = data['name']
+        self.spellId = data['spellId']
+        self.creatureId = data['creatureId']
+        self.itemId = data['itemId']
+        self.quality = data['qualityId']
+        self.icon = data['icon']
+        self.guid = data['battlePetGuid']
+        self.favourite = data['isFavorite']
+        self.creatureName = data['creatureName']
+        self.canBattle = data['canBattle']
+        self.abilitySlots = [data['isFirstAbilitySlotSelected'], data['isSecondAbilitySlotSelected'], data['isThirdAbilitySlotSelected']]
+        
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return '<%s: %s>' % (self.__class__.__name__, self.name)
+        
+    def get_quality_name(self):
+        return QUALITY.get(self.quality, 'Unknown')
+
+    def get_icon_url(self, size='large'):
+        return make_icon_url(self._region, self.icon, size)
+        
