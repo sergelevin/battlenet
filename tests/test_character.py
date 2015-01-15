@@ -18,7 +18,7 @@ battlenet.Connection.setup(public_key=PUBLIC_KEY, private_key=PRIVATE_KEY)
 
 class CharacterTest(unittest.TestCase):
 
-    _character_name = 'Sejta'
+    _character_name = 'Därtvader'
     _region = battlenet.EUROPE
     _realm_name = "Lightning's Blade"
     _guild_name = 'Paragon'

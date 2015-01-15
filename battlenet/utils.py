@@ -9,7 +9,8 @@ def normalize(name):
     if not isinstance(name, unicode):
         name = name.decode('utf-8')
 
-    return unicodedata.normalize('NFKC', name.replace("'", '')).encode('utf-8')
+    name = name.replace("'", '')
+    return unicodedata.normalize('NFKC', name).encode('utf-8')
 
 
 def quote(name):
