@@ -875,6 +875,7 @@ class Realm(Thing):
         self.queue = data['queue']
         self.population = data['population']
         self.type = data['type']
+        self.locale = data['locale']
 
     def refresh(self):
         self._populate_data(self.connection.get_realm(self.name, raw=True))
