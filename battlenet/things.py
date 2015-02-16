@@ -838,7 +838,33 @@ class Reward(Thing):
     def get_race_names(self):
         return [RACE[race] for race in self.races]
 
+class PvPArea(Thing):
+    ALLIANCE = 0
+    HORDE = 1
+    NEUTRAL = 2
+    
+    UNKNOWN = -1
+    IDLE = 0
+    POPULATING = 1
+    ACTIVE = 2
+    CONCLUDED = 3
+    
+    def __init__(self, region, data, name=None):
+        super(PvPArea, self).__init__(data)
+        
+        self.name = name
+        self.region = region
+        self.area = data['area']
+        self.faction = data['controlling-faction']
+        self.status = data['status']
+        self.next = data['next']
+        
+    def __str__(self):
+        return self.name
 
+    def __repr__(self):
+        return '<%s: %s>' % (self.__class__.__name__, str(self))
+        
 class Realm(Thing):
     PVP = 'pvp'
     PVE = 'pve'
@@ -876,6 +902,8 @@ class Realm(Thing):
         self.population = data['population']
         self.type = data['type']
         self.locale = data['locale']
+        self.tolbarad = PvPArea(self.region, data['tol-barad'], "Tol Barad")
+        self.wintergrasp = PvPArea(self.region, data['wintergrasp'], "Wintergrasp")
 
     def refresh(self):
         self._populate_data(self.connection.get_realm(self.name, raw=True))
